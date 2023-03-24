@@ -11,23 +11,23 @@
         <h3>
             New password
         </h3>
-        <asp:TextBox ID="NewPasswordTextbox" runat="server" TextMode="Password"></asp:TextBox>
+        <asp:TextBox ID="NewPasswordTextbox" runat="server" TextMode="Password" />
         <br />
         <br />
         <h3>
             Confirm password
         </h3>
-        <asp:TextBox ID="ConfirmPasswordTextbox" runat="server" TextMode="Password"></asp:TextBox>
+        <asp:TextBox ID="ConfirmPasswordTextbox" runat="server" TextMode="Password" />
         <br />
         <br />
         <h3>
             Portected field
         </h3>
-        <asp:TextBox ID="ProtectedStringTextbox" runat="server"></asp:TextBox>
+        <asp:TextBox ID="ProtectedStringTextbox" runat="server" />
         <br />
         <br />
         <asp:Button ID="ChangePasswordButton" runat="server" Text="ChangePassword" OnClick="ChangePasswordButton_Click" style="height: 26px" />
-        <asp:Label ID="Message" runat="server" Visible="false"></asp:Label>
+        <asp:Label ID="Message" runat="server" Visible="false" />
     </form>
 </body>
 </html>

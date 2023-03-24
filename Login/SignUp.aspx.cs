@@ -59,5 +59,10 @@ namespace Login
                 return builder.ToString();
             }
         }
+
+        protected void Back_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Login.aspx");
+        }
     }
 }

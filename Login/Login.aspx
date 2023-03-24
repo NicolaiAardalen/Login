@@ -48,7 +48,7 @@
         <br />
         <br />
         <asp:Button ID="LoginButton" runat="server" Text="Login" OnClick="Login_Click"/>
-        <asp:Label ID="WrongPassword" runat="server" Text="Wrong password!" Visible="false" ForeColor="Red"></asp:Label>
+        <asp:Label ID="WrongPassword" runat="server" Text="Wrong password!" Visible="false" ForeColor="Red" />
         <br />
         <br />
         <asp:Button ID="ForgotPassword" runat="server" Text="Forgot your password" OnClick="ForgotPassword_Click" CssClass="ForgotPasswordLink" Width="144px" />

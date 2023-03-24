@@ -24,6 +24,15 @@ namespace Login
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// Back control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Back;
+
+        /// <summary>
         /// UsernameTextBox control.
         /// </summary>
         /// <remarks>
@@ -51,6 +60,15 @@ namespace Login
         protected global::System.Web.UI.WebControls.TextBox PasswordTextBox;
 
         /// <summary>
+        /// ShowPasswordCheckbox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox ShowPasswordCheckbox;
+
+        /// <summary>
         /// SignUpButton control.
         /// </summary>
         /// <remarks>
@@ -67,5 +85,14 @@ namespace Login
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox AdminTextbox;
+
+        /// <summary>
+        /// ShowAdminPasswordCheckbox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox ShowAdminPasswordCheckbox;
     }
 }
