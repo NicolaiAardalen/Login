@@ -24,13 +24,13 @@ namespace Login
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// EmailTextbox control.
+        /// UsernameOrEmailTextbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EmailTextbox;
+        protected global::System.Web.UI.WebControls.TextBox UsernameOrEmailTextbox;
 
         /// <summary>
         /// PasswordTextbox control.
@@ -40,6 +40,15 @@ namespace Login
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox PasswordTextbox;
+
+        /// <summary>
+        /// ShowPasswordCheckbox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox ShowPasswordCheckbox;
 
         /// <summary>
         /// LoginButton control.

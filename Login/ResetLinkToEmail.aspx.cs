@@ -8,6 +8,8 @@ using System.Net;
 using System.Net.Mail;
 using BusinessLayer;
 using System.Data;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Login
 {
@@ -29,14 +31,16 @@ namespace Login
 
         protected void SendEmailLink_Click(object sender, EventArgs e)
         {
-            string lettersString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-            char[] letters = lettersString.ToCharArray();
+            string CharactersString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
+            char[] Characters = CharactersString.ToCharArray();
             Random random = new Random();
-            string ProtectedString = "";
+            string newProtectedString = "";
             for (int i = 0; i < 50; i++)
             {
-                ProtectedString += letters[random.Next(0, 60)];
+                newProtectedString += Characters[random.Next(0, 63)];
             }
+
+            string HashedenewProtectedString = ComputeSha256Hash(newProtectedString);
 
             string Email = EmailTextbox.Text;
             string EmailFromDB = "";
@@ -59,7 +63,7 @@ namespace Login
             message.To.Add(Email);
 
             message.Subject = "Password reset";
-            message.Body = $"Click the link to reset your password: https://localhost:44395/PasswordReset.aspx?ID={ID}&Email={Email}&Protect={ProtectedString} \nCopy this line, and paste it in the \"Portected field\" on the site: {HttpUtility.UrlEncode(ProtectedString)}";
+            message.Body = $"Click the link to reset your password: https://localhost:44395/PasswordReset.aspx?ID={ID}&Email={Email}&Protect={newProtectedString} \nCopy this line, and paste it in the \"Portected field\" on the site: {newProtectedString}";
 
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
 
@@ -68,12 +72,27 @@ namespace Login
             smtpClient.EnableSsl = true;
 
             smtpClient.Send(message);
+            bl.UpdateProtectedString(HashedenewProtectedString, ID);
             ClientScript.RegisterStartupScript(this.GetType(), "redirectScript", "setTimeout(function() { window.location.replace('Login.aspx'); }, 1000);", true);
         }
 
         protected void BackToLogin_Click(object sender, EventArgs e)
         {
             Response.Redirect("Login.aspx");
+        }
+        static string ComputeSha256Hash(string rawData)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
     }
 }

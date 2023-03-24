@@ -21,28 +21,40 @@
         cursor: pointer;
     }
 </style>
+    <script>
+        function ShowPassword() {
+            var passwordTextbox = document.getElementById('<%= PasswordTextbox.ClientID %>');
+        var showPasswordCheckbox = document.getElementById('<%= ShowPasswordCheckbox.ClientID %>');
+            if (showPasswordCheckbox.checked) {
+                passwordTextbox.type = "text";
+            }
+            else {
+                passwordTextbox.type = "password";
+            }
+        }
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
         <h3>
-            Email
+            Username/Email
         </h3>
-        <asp:TextBox ID="EmailTextbox" runat="server"></asp:TextBox>
+        <asp:TextBox ID="UsernameOrEmailTextbox" runat="server"></asp:TextBox>
         <h3>
             Password
         </h3>
-        <asp:TextBox ID="PasswordTextbox" runat="server" TextMode="Password"></asp:TextBox>
+        <asp:TextBox ID="PasswordTextbox" runat="server" TextMode="Password" />
+        <asp:CheckBox ID="ShowPasswordCheckbox" runat="server" onchange="ShowPassword()" />
         <br />
         <br />
         <asp:Button ID="LoginButton" runat="server" Text="Login" OnClick="Login_Click"/>
-        <asp:Label ID="WrongPassword" runat="server" Text="Wrong password!" Visible="false"></asp:Label>
+        <asp:Label ID="WrongPassword" runat="server" Text="Wrong password!" Visible="false" ForeColor="Red"></asp:Label>
         <br />
         <br />
         <asp:Button ID="ForgotPassword" runat="server" Text="Forgot your password" OnClick="ForgotPassword_Click" CssClass="ForgotPasswordLink" Width="144px" />
         <br />
         <br />
         <asp:Button ID="SignUp" runat="server" Text="Sign up" OnClick="SignUp_Click" CssClass="SignUpLink" />
-
     </form>
 </body>
 </html>

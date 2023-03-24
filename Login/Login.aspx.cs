@@ -14,45 +14,48 @@ namespace Login
 {
     public partial class Login : System.Web.UI.Page
     {
+        private BLayer bl = new BLayer();
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
-        private BLayer db = new BLayer();
         protected void Login_Click(object sender, EventArgs e)
         {
-            var GetAllDataFromBildeOgPassord = db.GetAllDataFromAccounts();
-            int ID;
-            var Username = "";
-            var Email = "";
-            var Password = "";
+            var GetAllDataFromAccounts = bl.GetAllDataFromAccounts();
+            string ID;
+            string Username;
+            string Email;
+            string Password;
+            string ProtectedString;
 
-            string lettersString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-            char[] letters = lettersString.ToCharArray();
+            string CharactersString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
+            char[] Characters = CharactersString.ToCharArray();
             Random random = new Random();
-            string ProtectedString = "";
+            string newProtectedString = "";
             for (int i = 0; i < 50; i++)
             {
-                ProtectedString += letters[random.Next(0, 60)];
+                newProtectedString += Characters[random.Next(0, 63)];
             }
 
-            foreach (DataRow row in GetAllDataFromBildeOgPassord.AsEnumerable())
+            string HashedenewProtectedString = ComputeSha256Hash(newProtectedString);
+
+            foreach (DataRow row in GetAllDataFromAccounts.AsEnumerable())
             {
-                ID = int.Parse(row["ID"].ToString());
+                ID = row["ID"].ToString();
                 Email = row["Email"].ToString().ToLower();
                 Password = row["Password"].ToString();
-                Username = HttpUtility.UrlEncode(row["Username"].ToString());
+                Username = row["Username"].ToString();
+                ProtectedString = row["ProtectedString"].ToString();
+
                 string HashedPasswordFromTextbox = ComputeSha256Hash(PasswordTextbox.Text);
-                if (HashedPasswordFromTextbox == Password && Email == EmailTextbox.Text.ToLower())
+
+                if (HashedPasswordFromTextbox == Password && Email == UsernameOrEmailTextbox.Text.ToLower() || HashedPasswordFromTextbox == Password && Username == UsernameOrEmailTextbox.Text)
                 {
                     FormsAuthentication.RedirectFromLoginPage(HashedPasswordFromTextbox, false);
-                    Response.Redirect($"Default.aspx?ID={ID}&username={Username}&Protect={ProtectedString}");
-                }
-                else
-                {
-                    WrongPassword.Visible = true;
+                    bl.UpdateProtectedString(HashedenewProtectedString, ID);
+                    Response.Redirect($"Default.aspx?ID={ID}&username={Username}&Protect={newProtectedString}");
                 }
             }
+            WrongPassword.Visible = true;
         }
         static string ComputeSha256Hash(string rawData)
         {
@@ -70,8 +73,20 @@ namespace Login
         }
         protected void ForgotPassword_Click(object sender, EventArgs e)
         {
-            string Email = HttpUtility.UrlEncode(EmailTextbox.Text);
-            Response.Redirect($"ResetLinkToEmail.aspx?Email={Email}");
+            var GetAllDataFromAccounts = bl.GetAllDataFromAccounts();
+            string Email = UsernameOrEmailTextbox.Text;
+            string EncodeedEmail = HttpUtility.UrlEncode(Email);
+            string UsernameFromDB;
+
+            foreach (DataRow row in GetAllDataFromAccounts.AsEnumerable())
+            {
+                UsernameFromDB = row["Username"].ToString();
+                if (UsernameFromDB == Email)
+                {
+                    Response.Redirect("ResetLinkToEmail.aspx");
+                }
+            }
+            Response.Redirect($"ResetLinkToEmail.aspx?Email={EncodeedEmail}");
         }
         protected void SignUp_Click(object sender, EventArgs e)
         {

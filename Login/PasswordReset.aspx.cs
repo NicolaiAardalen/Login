@@ -58,12 +58,10 @@ namespace Login
         {
             try
             {
+                string ProtectedString = Request.QueryString["Protect"];
                 string EmailFromQueryString = Request.QueryString["Email"].ToLower();
-                if (EmailFromQueryString == null)
-                {
-                    Response.Redirect("Login.aspx");
-                }
                 string IDFromQueryString = Request.QueryString["ID"];
+                string HashedProtectedStringFromDB = "";
                 string Email = "";
                 string ID;
 
@@ -71,6 +69,7 @@ namespace Login
 
                 foreach (DataRow row in GetAllDataFromAccounts.AsEnumerable())
                 {
+                    HashedProtectedStringFromDB = row["ProtectedString"].ToString();
                     Email = row["Email"].ToString().ToLower();
                     ID = row["ID"].ToString();
                     if (Email != EmailFromQueryString && ID == IDFromQueryString || Email == EmailFromQueryString && ID != IDFromQueryString)
@@ -79,8 +78,17 @@ namespace Login
                     }
                 }
 
-                string ProtectedString = Request.QueryString["Protect"];
-                if (ProtectedString == null || ProtectedString == "")
+                foreach (DataRow row in GetAllDataFromAccounts.AsEnumerable())
+                {
+                    HashedProtectedStringFromDB = row["ProtectedString"].ToString();
+                    ID = row["ID"].ToString();
+                    if (HashedProtectedStringFromDB == ComputeSha256Hash(ProtectedString))
+                    {
+                        break;
+                    }
+                }
+
+                if (ComputeSha256Hash(ProtectedString) != HashedProtectedStringFromDB)
                 {
                     Response.Redirect("Login.aspx");
                 }
