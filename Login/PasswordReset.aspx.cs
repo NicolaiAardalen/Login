@@ -63,7 +63,8 @@ namespace Login
                 string IDFromQueryString = Request.QueryString["ID"];
                 string HashedProtectedStringFromDB = "";
                 string Email = "";
-                string ID;
+                string ID = "";
+                string ProtectedStringUsed = "";
 
                 var GetAllDataFromAccounts = db.GetAllDataFromAccounts();
 
@@ -82,16 +83,18 @@ namespace Login
                 {
                     HashedProtectedStringFromDB = row["ProtectedString"].ToString();
                     ID = row["ID"].ToString();
+                    ProtectedStringUsed = row["ProtectedStringUsed"].ToString().ToLower();
                     if (HashedProtectedStringFromDB == ComputeSha256Hash(ProtectedString))
                     {
                         break;
                     }
                 }
 
-                if (ComputeSha256Hash(ProtectedString) != HashedProtectedStringFromDB)
+                if (ComputeSha256Hash(ProtectedString) != HashedProtectedStringFromDB || ProtectedStringUsed == "true")
                 {
                     Response.Redirect("Login.aspx");
                 }
+                db.UpdateProtectedStringUsed(true, ID);
             }
             catch (Exception) { }
         }

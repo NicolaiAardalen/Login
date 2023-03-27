@@ -27,9 +27,13 @@ namespace BusinessLayer
         {
             dbl.SignUpANewAccoutnt(Username, Email, Password, Admin);
         }
-        public void UpdateProtectedString(string ProtectedString, string ID)
+        public void UpdateProtectedString(string ProtectedString, bool ProtectedStringUsed, string ID)
         {
-            dbl.UpdateProtectedString(ProtectedString, ID);
+            dbl.UpdateProtectedString(ProtectedString, ProtectedStringUsed, ID);
+        }
+        public void UpdateProtectedStringUsed(bool ProtectedStringUsed, string ID)
+        {
+            dbl.UpdateProtectedStringUsed(ProtectedStringUsed, ID);
         }
     }
 }

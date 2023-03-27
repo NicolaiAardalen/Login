@@ -19,14 +19,14 @@ namespace Login
             if (!IsPostBack)
             {
                 CheckUser();
-                WelcomeUser();
+                //WelcomeUser();
             }
         }
-        public void WelcomeUser()
-        {
-            string Username = Request.QueryString["Username"];
-            UsernameLabel.Text = Username;
-        }
+        //public void WelcomeUser()
+        //{
+        //    string Username = Request.QueryString["Username"];
+        //    UsernameLabel.Text = Username;
+        //}
         public void CheckUser()
         {
             var GetAllDataFromAccounts = bl.GetAllDataFromAccounts();

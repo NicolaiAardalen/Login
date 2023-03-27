@@ -79,14 +79,30 @@ namespace DataBaseLayer
             }
             catch (Exception) { }
         }
-        public void UpdateProtectedString(string ProtectedString, string ID)
+        public void UpdateProtectedString(string ProtectedString, bool ProtectedStringUsed, string ID)
         {
             try
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand($"UPDATE Accounts SET ProtectedString = @ps WHERE ID = @id", conn);
+                SqlCommand cmd = new SqlCommand($"UPDATE Accounts SET ProtectedString = @ps, ProtectedStringUsed = @psu WHERE ID = @id", conn);
 
                 cmd.Parameters.AddWithValue("ps", ProtectedString);
+                cmd.Parameters.AddWithValue("psu", ProtectedStringUsed);
+                cmd.Parameters.AddWithValue("id", ID);
+
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception) { }
+        }
+        public void UpdateProtectedStringUsed(bool ProtectedStringUsed, string ID)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand($"UPDATE Accounts SET ProtectedStringUsed = @psu WHERE ID = @id", conn);
+
+                cmd.Parameters.AddWithValue("psu", ProtectedStringUsed);
                 cmd.Parameters.AddWithValue("id", ID);
 
                 cmd.ExecuteNonQuery();

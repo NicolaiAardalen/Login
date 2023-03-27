@@ -5,103 +5,70 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
   <meta charset="UTF-8" />
-  <title>Hamburger Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <title>Main</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-    }
-    .logo {
-      font-size: 30px;
-      font-weight: bold;
-    }
-    .menu-btn {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 20px;
-      cursor: pointer;
-    }
-    .menu-btn span {
-      display: block;
-      height: 3px;
-      width: 100%;
-      background-color: #fff;
-      border-radius: 3px;
-      transition: all 0.3s ease-in-out;
-    }
-    .menu-btn.open span:nth-child(2) {
-      opacity: 0;
-    }
-    .menu-btn.open span:nth-child(1) {
-      transform: translateY(5px) rotate(45deg);
-    }
-    .menu-btn.open span:nth-child(3) {
-      transform: translateY(-5px) rotate(-45deg);
-    }
-    .menu {
-      display: none;
-    }
-    .menu.open {
-      display: block;
-    }
-    .menu ul {
-      list-style: none;
-      padding: 20px;
-    }
-    .menu li {
-      font-size: 20px;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
+      body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+#myLinks {
+  display: none;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  background-color: #333;
+  width: 200px;
+  padding-left: 50px;
+  z-index: 1;
+}
+
+a {
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  display: block;
+}
+
+a.icon {
+  background: black;
+  display: block;
+  position: fixed;
+  right: auto;
+  top: 0;
+}
+
+a.icon:hover {
+  background-color: #ddd;
+  color: black;
+}
   </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <h3>
-            Welcome <asp:Label ID="UsernameLabel" runat="server" />
-        </h3>
-        <header>
-    <div class="logo">Logo</div>
-    <div class="menu-btn">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </header>
-  <div class="menu">
-    <ul>
-      <li>Home</li>
-      <li>About</li>
-      <li>Contact</li>
-    </ul>
-  </div>
-        <script>
-            const hamburgerMenu = document.querySelector('.hamburger-menu');
-            const menu = document.querySelector('.menu');
 
-            let menuOpen = false;
-            hamburgerMenu.addEventListener('click', () => {
-                if (!menuOpen) {
-                    hamburgerMenu.classList.add('open');
-                    menu.classList.add('open');
-                    menuOpen = true;
-                } else {
-                    hamburgerMenu.classList.remove('open');
-                    menu.classList.remove('open');
-                    menuOpen = false;
-                }
-            });
-        </script>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+  <div id="myLinks">
+    <a href="#news">News</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+  </div>
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("myLinks");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
+    }
+</script>
     </form>
 </body>
 </html>

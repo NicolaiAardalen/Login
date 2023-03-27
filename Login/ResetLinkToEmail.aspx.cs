@@ -72,7 +72,7 @@ namespace Login
             smtpClient.EnableSsl = true;
 
             smtpClient.Send(message);
-            bl.UpdateProtectedString(HashedenewProtectedString, ID);
+            bl.UpdateProtectedString(HashedenewProtectedString, false, ID);
             ClientScript.RegisterStartupScript(this.GetType(), "redirectScript", "setTimeout(function() { window.location.replace('Login.aspx'); }, 1000);", true);
         }
 

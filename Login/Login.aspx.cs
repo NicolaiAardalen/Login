@@ -51,7 +51,7 @@ namespace Login
                 if (HashedPasswordFromTextbox == Password && Email == UsernameOrEmailTextbox.Text.ToLower() || HashedPasswordFromTextbox == Password && Username == UsernameOrEmailTextbox.Text)
                 {
                     FormsAuthentication.RedirectFromLoginPage(HashedPasswordFromTextbox, false);
-                    bl.UpdateProtectedString(HashedenewProtectedString, ID);
+                    bl.UpdateProtectedString(HashedenewProtectedString, false, ID);
                     Response.Redirect($"Default.aspx?ID={ID}&username={Username}&Protect={newProtectedString}");
                 }
             }
